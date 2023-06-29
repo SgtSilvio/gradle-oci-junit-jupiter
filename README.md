@@ -4,8 +4,6 @@
 [![javadoc](https://javadoc.io/badge2/io.github.sgtsilvio/gradle-oci-junit-jupiter/javadoc.svg?style=for-the-badge)](https://javadoc.io/doc/io.github.sgtsilvio/gradle-oci-junit-jupiter)
 [![GitHub](https://img.shields.io/github/license/sgtsilvio/gradle-oci-junit-jupiter?color=brightgreen&style=for-the-badge)](LICENSE)
 
-OCI registry Java library that allows serving OCI artifacts to pull operations.
-
 ## How to Use
 
 ### Add the Dependency
