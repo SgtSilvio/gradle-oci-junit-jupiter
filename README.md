@@ -1,4 +1,4 @@
-# Integration of gradle-oci and junit-jupiter
+# Integration of [gradle-oci](https://github.com/sgtsilvio/gradle-oci) and [junit-jupiter](https://github.com/junit-team/junit5/)
 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.github.sgtsilvio/gradle-oci-junit-jupiter/badge.svg?style=for-the-badge)](https://maven-badges.herokuapp.com/maven-central/io.github.sgtsilvio/gradle-oci-junit-jupiter)
 [![javadoc](https://javadoc.io/badge2/io.github.sgtsilvio/gradle-oci-junit-jupiter/javadoc.svg?style=for-the-badge)](https://javadoc.io/doc/io.github.sgtsilvio/gradle-oci-junit-jupiter)
