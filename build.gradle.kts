@@ -40,9 +40,9 @@ repositories {
 }
 
 dependencies {
+    api(libs.testcontainers)
     implementation(libs.junit.platform.launcher)
     implementation(libs.oci.registry)
-    implementation(libs.testcontainers)
 }
 
 publishing {

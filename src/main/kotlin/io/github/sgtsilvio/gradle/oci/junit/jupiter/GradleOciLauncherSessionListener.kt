@@ -6,7 +6,6 @@ import io.github.sgtsilvio.oci.registry.OciRegistryHandler
 import org.junit.platform.launcher.LauncherSession
 import org.junit.platform.launcher.LauncherSessionListener
 import org.testcontainers.DockerClientFactory
-import org.testcontainers.Testcontainers
 import org.testcontainers.utility.DockerImageName
 import reactor.netty.DisposableServer
 import reactor.netty.http.server.HttpServer
@@ -25,7 +24,7 @@ object OciImages {
     private val imageNames = mutableListOf<Pair<DockerImageName, Boolean>>()
 
     @JvmStatic
-    fun getImageName(imageName: String): DockerImageName = getImageName(imageName, false)
+    fun getImageName(imageName: String) = getImageName(imageName, false)
 
     @JvmStatic
     fun getImageName(imageName: String, retain: Boolean): DockerImageName {
