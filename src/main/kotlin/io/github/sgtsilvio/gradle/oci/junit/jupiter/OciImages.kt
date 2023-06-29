@@ -14,11 +14,6 @@ import java.nio.file.Paths
 /**
  * @author Silvio Giebl
  */
-class GradleOciLauncherSessionListener : LauncherSessionListener {
-
-    override fun launcherSessionClosed(session: LauncherSession) = OciImages.cleanup()
-}
-
 object OciImages {
     private var registry: DisposableServer? = null
     private val imageNames = mutableListOf<Pair<DockerImageName, Boolean>>()
@@ -65,4 +60,8 @@ object OciImages {
         stopRegistry()
         cleanupImages()
     }
+}
+
+class OciLauncherSessionListener : LauncherSessionListener {
+    override fun launcherSessionClosed(session: LauncherSession) = OciImages.cleanup()
 }

@@ -1,1 +1,1 @@
-io.github.sgtsilvio.gradle.oci.junit.jupiter.GradleOciLauncherSessionListener
+io.github.sgtsilvio.gradle.oci.junit.jupiter.OciLauncherSessionListener
