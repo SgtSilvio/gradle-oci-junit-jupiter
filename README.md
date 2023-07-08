@@ -36,6 +36,19 @@ oci {
 }
 ```
 
+### Configure Docker on MacOS / Windows
+
+On MacOS and Windows `host.docker.internal` needs to be configured as an insecure registry in the Docker daemon configuration.
+Usually. `host.docker.internal` resolves to the address `192.168.65.254`.
+
+```json
+{
+  "insecure-registries": [
+    "192.168.65.254/32"
+  ]
+}
+```
+
 ### Start a TestContainer in Your JUnit Test
 
 Example in Java:
