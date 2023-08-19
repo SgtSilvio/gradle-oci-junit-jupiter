@@ -3,8 +3,6 @@ package io.github.sgtsilvio.gradle.oci.junit.jupiter
 import com.github.dockerjava.api.exception.NotFoundException
 import com.sun.jna.Platform
 import io.github.sgtsilvio.oci.registry.OciRegistryHandler
-import org.junit.platform.launcher.LauncherSession
-import org.junit.platform.launcher.LauncherSessionListener
 import org.testcontainers.DockerClientFactory
 import org.testcontainers.utility.DockerImageName
 import reactor.netty.DisposableServer
@@ -60,8 +58,4 @@ object OciImages {
         stopRegistry()
         cleanupImages()
     }
-}
-
-class OciLauncherSessionListener : LauncherSessionListener {
-    override fun launcherSessionClosed(session: LauncherSession) = OciImages.cleanup()
 }
