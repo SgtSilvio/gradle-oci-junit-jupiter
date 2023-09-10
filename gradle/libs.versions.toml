@@ -1,7 +1,7 @@
 [versions]
 junit-platform = "1.10.0"
 oci-registry = "0.1.0"
-testcontainers = "1.18.3"
+testcontainers = "1.19.0"
 
 [libraries]
 junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher", version.ref = "junit-platform" }
