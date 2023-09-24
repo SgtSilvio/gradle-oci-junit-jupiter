@@ -38,6 +38,9 @@ object OciImages {
     }
 
     private fun cleanupImages() {
+        if (imageNames.isEmpty()) {
+            return
+        }
         val dockerClient = DockerClientFactory.instance().client()
         for ((imageName, retain) in imageNames) {
             if (retain) {
