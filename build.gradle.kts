@@ -12,24 +12,24 @@ group = "io.github.sgtsilvio"
 description = "Integration of gradle-oci and junit-jupiter"
 
 metadata {
-    readableName.set("Integration of gradle-oci and junit-jupiter")
+    readableName = "Integration of gradle-oci and junit-jupiter"
     license {
         apache2()
     }
     developers {
         register("SgtSilvio") {
-            fullName.set("Silvio Giebl")
+            fullName = "Silvio Giebl"
         }
     }
     github {
-        org.set("SgtSilvio")
+        org = "SgtSilvio"
         issues()
     }
 }
 
 java {
     toolchain {
-        languageVersion.set(JavaLanguageVersion.of(8))
+        languageVersion = JavaLanguageVersion.of(8)
     }
     withJavadocJar()
     withSourcesJar()
@@ -63,8 +63,8 @@ signing {
 nexusPublishing {
     this.repositories {
         sonatype {
-            nexusUrl.set(uri("https://s01.oss.sonatype.org/service/local/"))
-            snapshotRepositoryUrl.set(uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
+            nexusUrl = uri("https://s01.oss.sonatype.org/service/local/")
+            snapshotRepositoryUrl = uri("https://s01.oss.sonatype.org/content/repositories/snapshots/")
         }
     }
 }
