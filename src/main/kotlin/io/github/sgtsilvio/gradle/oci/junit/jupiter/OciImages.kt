@@ -30,9 +30,18 @@ object OciImages {
         }
     }
 
-    private fun startRegistry(): DisposableServer = registry ?: HttpServer.create().port(0)
+    private fun startRegistry(): DisposableServer = registry ?: HttpServer.create()
+        .port(0)
         .handle(OciRegistryHandler(Paths.get(System.getProperty("io.github.sgtsilvio.gradle.oci.registry.data.dir"))))
-        .bindNow().also { registry = it }
+        .bindNow()
+        .also { registry = it }
+
+    internal fun cleanup() {
+        synchronized(OciImages) {
+            stopRegistry()
+            cleanupImages()
+        }
+    }
 
     private fun stopRegistry() {
         registry?.disposeNow()
@@ -57,12 +66,5 @@ object OciImages {
             }
         }
         imageNames.clear()
-    }
-
-    internal fun cleanup() {
-        synchronized(OciImages) {
-            stopRegistry()
-            cleanupImages()
-        }
     }
 }
