@@ -21,11 +21,13 @@ object OciImages {
 
     @JvmStatic
     fun getImageName(imageName: String, retain: Boolean): DockerImageName {
-        val port = startRegistry().port()
-        val host = if (Platform.isMac() || Platform.isWindows()) "host.docker.internal" else "localhost"
-        val dockerImageName = DockerImageName.parse("$host:$port/$imageName").asCompatibleSubstituteFor(imageName)
-        imageNames += Pair(dockerImageName, retain)
-        return dockerImageName
+        synchronized(OciImages) {
+            val port = startRegistry().port()
+            val host = if (Platform.isMac() || Platform.isWindows()) "host.docker.internal" else "localhost"
+            val dockerImageName = DockerImageName.parse("$host:$port/$imageName").asCompatibleSubstituteFor(imageName)
+            imageNames += Pair(dockerImageName, retain)
+            return dockerImageName
+        }
     }
 
     private fun startRegistry(): DisposableServer = registry ?: HttpServer.create().port(0)
@@ -58,7 +60,9 @@ object OciImages {
     }
 
     internal fun cleanup() {
-        stopRegistry()
-        cleanupImages()
+        synchronized(OciImages) {
+            stopRegistry()
+            cleanupImages()
+        }
     }
 }
