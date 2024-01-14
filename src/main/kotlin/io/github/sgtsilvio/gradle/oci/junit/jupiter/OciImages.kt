@@ -2,6 +2,7 @@ package io.github.sgtsilvio.gradle.oci.junit.jupiter
 
 import com.github.dockerjava.api.exception.NotFoundException
 import com.sun.jna.Platform
+import io.github.sgtsilvio.oci.registry.DefaultOciRegistryStorage
 import io.github.sgtsilvio.oci.registry.OciRegistryHandler
 import org.testcontainers.DockerClientFactory
 import org.testcontainers.utility.DockerImageName
@@ -30,11 +31,15 @@ object OciImages {
         }
     }
 
-    private fun startRegistry(): DisposableServer = registry ?: HttpServer.create()
-        .port(0)
-        .handle(OciRegistryHandler(Paths.get(System.getProperty("io.github.sgtsilvio.gradle.oci.registry.data.dir"))))
-        .bindNow()
-        .also { registry = it }
+    private fun startRegistry(): DisposableServer = registry ?: run {
+        val registryDataDirectory = Paths.get(System.getProperty("io.github.sgtsilvio.gradle.oci.registry.data.dir"))
+        val registry = HttpServer.create()
+            .port(0)
+            .handle(OciRegistryHandler(DefaultOciRegistryStorage(registryDataDirectory)))
+            .bindNow()
+        this.registry = registry
+        registry
+    }
 
     internal fun cleanup() {
         synchronized(OciImages) {
