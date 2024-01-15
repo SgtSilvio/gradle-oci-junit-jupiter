@@ -31,7 +31,7 @@ plugins {
 
 oci {
     imageDependencies.forTest(tasks.test) {
-        default("example/example:123")
+        add("example:example:123")
     }
 }
 ```
