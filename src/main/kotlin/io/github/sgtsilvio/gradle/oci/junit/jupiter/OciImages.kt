@@ -58,6 +58,7 @@ object OciImages {
             return
         }
         val dockerClient = DockerClientFactory.instance().client()
+        var error: Exception? = null
         for ((imageName, retain) in imageNames) {
             if (retain) {
                 try {
@@ -68,8 +69,17 @@ object OciImages {
             try {
                 dockerClient.removeImageCmd(imageName.toString()).exec()
             } catch (ignored: NotFoundException) {
+            } catch (e: Exception) {
+                if (error == null) {
+                    error = e
+                } else {
+                    error.addSuppressed(e)
+                }
             }
         }
         imageNames.clear()
+        if (error != null) {
+            throw error
+        }
     }
 }
