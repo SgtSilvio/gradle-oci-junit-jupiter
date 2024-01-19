@@ -38,6 +38,7 @@ object OciImages {
             .handle(OciRegistryHandler(DefaultOciRegistryStorage(registryDataDirectory)))
             .bindNow()
         this.registry = registry
+        Runtime.getRuntime().addShutdownHook(Thread { cleanup() })
         registry
     }
 
