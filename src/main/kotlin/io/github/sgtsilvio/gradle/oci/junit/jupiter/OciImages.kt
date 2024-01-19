@@ -43,8 +43,11 @@ object OciImages {
 
     internal fun cleanup() {
         synchronized(OciImages) {
-            stopRegistry()
-            cleanupImages()
+            try {
+                cleanupImages()
+            } finally {
+                stopRegistry()
+            }
         }
     }
 
