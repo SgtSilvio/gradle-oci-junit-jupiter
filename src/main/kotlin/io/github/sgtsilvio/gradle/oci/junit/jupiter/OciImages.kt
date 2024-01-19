@@ -97,11 +97,6 @@ object OciImages {
         }
     }
 
-    private fun stopRegistry() {
-        registry?.disposeNow()
-        registry = null
-    }
-
     private fun cleanupImages() {
         if (imageNames.isEmpty()) {
             return
@@ -130,5 +125,10 @@ object OciImages {
         if (error != null) {
             throw error
         }
+    }
+
+    private fun stopRegistry() {
+        registry?.disposeNow()
+        registry = null
     }
 }
