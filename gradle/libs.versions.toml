@@ -1,6 +1,6 @@
 [versions]
 junit-platform = "1.10.2"
-oci-registry = "0.3.0"
+oci-registry = "0.4.0"
 testcontainers = "1.19.7"
 
 [libraries]
