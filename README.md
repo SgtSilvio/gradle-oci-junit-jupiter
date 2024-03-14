@@ -1,6 +1,6 @@
 # Integration of [gradle-oci](https://github.com/sgtsilvio/gradle-oci) and [junit-jupiter](https://github.com/junit-team/junit5/)
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.github.sgtsilvio/gradle-oci-junit-jupiter/badge.svg?style=for-the-badge)](https://maven-badges.herokuapp.com/maven-central/io.github.sgtsilvio/gradle-oci-junit-jupiter)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.github.sgtsilvio/gradle-oci-junit-jupiter/badge.svg?style=for-the-badge)](https://central.sonatype.com/artifact/io.github.sgtsilvio/gradle-oci-junit-jupiter)
 [![javadoc](https://javadoc.io/badge2/io.github.sgtsilvio/gradle-oci-junit-jupiter/javadoc.svg?style=for-the-badge)](https://javadoc.io/doc/io.github.sgtsilvio/gradle-oci-junit-jupiter)
 [![GitHub](https://img.shields.io/github/license/sgtsilvio/gradle-oci-junit-jupiter?color=brightgreen&style=for-the-badge)](LICENSE)
 [![GitHub Workflow Status (with branch)](https://img.shields.io/github/actions/workflow/status/sgtsilvio/gradle-oci-junit-jupiter/check.yml?branch=main&style=for-the-badge)](https://github.com/SgtSilvio/gradle-oci-junit-jupiter/actions/workflows/check.yml?query=branch%3Amain)
