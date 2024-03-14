@@ -8,7 +8,7 @@ import org.testcontainers.DockerClientFactory
 import org.testcontainers.utility.DockerImageName
 import reactor.netty.DisposableServer
 import reactor.netty.http.server.HttpServer
-import java.net.Socket
+import java.net.ServerSocket
 import java.nio.file.Paths
 
 /**
@@ -67,10 +67,12 @@ object OciImages {
             Pair(port, imageName)
         }.groupBy({ it.first }, { it.second }).forEach { (port, imageNames) ->
             val isLeftover = (port == currentRegistryPort) || try {
-                Socket(null as String?, port).close()
-                false
-            } catch (ignored: Exception) {
+                ServerSocket(port).close()
+                // if binding the port succeeds, no registry is running on that port => leftover
                 true
+            } catch (ignored: Exception) {
+                // if binding the port fails, a registry from another test run might be running => not a leftover
+                false
             }
             if (isLeftover) {
                 for (imageName in imageNames) {
@@ -78,6 +80,7 @@ object OciImages {
                         dockerClient.removeImageCmd(imageName).exec()
                     } catch (ignored: NotFoundException) {
                     } catch (e: Exception) {
+                        // only fail if not possible to delete an image that can interfere with the current test run
                         if (port == currentRegistryPort) {
                             throw e
                         }
