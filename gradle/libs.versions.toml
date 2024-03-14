@@ -1,11 +1,13 @@
 [versions]
 junit-platform = "1.10.2"
 oci-registry = "0.4.0"
+slf4j = "2.0.12"
 testcontainers = "1.19.7"
 
 [libraries]
 junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher", version.ref = "junit-platform" }
 oci-registry = { module = "io.github.sgtsilvio:oci-registry", version.ref = "oci-registry" }
+slf4j-api = { module = "org.slf4j:slf4j-api", version.ref = "slf4j" }
 testcontainers = { module = "org.testcontainers:testcontainers", version.ref = "testcontainers" }
 
 [plugins]

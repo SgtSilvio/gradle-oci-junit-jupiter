@@ -4,6 +4,7 @@ import com.github.dockerjava.api.exception.NotFoundException
 import com.sun.jna.Platform
 import io.github.sgtsilvio.oci.registry.DistributionRegistryStorage
 import io.github.sgtsilvio.oci.registry.OciRegistryHandler
+import org.slf4j.LoggerFactory
 import org.testcontainers.DockerClientFactory
 import org.testcontainers.utility.DockerImageName
 import reactor.netty.DisposableServer
@@ -17,6 +18,7 @@ import java.nio.file.Paths
 object OciImages {
     private var registry: DisposableServer? = null
     private val imageNames = mutableListOf<Pair<DockerImageName, Boolean>>()
+    private val logger = LoggerFactory.getLogger(OciImages::class.java)
 
     @JvmStatic
     fun getImageName(imageName: String) = getImageName(imageName, false)
@@ -37,10 +39,12 @@ object OciImages {
 
     private fun startRegistry(): DisposableServer {
         val registryDataDirectory = Paths.get(System.getProperty("io.github.sgtsilvio.gradle.oci.registry.data.dir"))
+        logger.debug("Starting OCI registry with data directory {}", registryDataDirectory)
         val registry = HttpServer.create()
             .port(0)
             .handle(OciRegistryHandler(DistributionRegistryStorage(registryDataDirectory)))
             .bindNow()
+        logger.debug("Started OCI registry on port {}", registry.port())
         this.registry = registry
         Runtime.getRuntime().addShutdownHook(Thread { cleanup() })
         cleanupLeftoverImages(registry.port())
@@ -48,6 +52,7 @@ object OciImages {
     }
 
     private fun cleanupLeftoverImages(currentRegistryPort: Int) {
+        logger.debug("Checking for leftover images")
         val hostPrefix = getRegistryHost() + ":"
         val dockerClient = DockerClientFactory.instance().client()
         dockerClient.listImagesCmd().exec().flatMap { it.repoTags.toList() }.mapNotNull { imageName ->
@@ -71,6 +76,7 @@ object OciImages {
                 // if binding the port succeeds, no registry is running on that port => leftover
                 true
             } catch (ignored: Exception) {
+                logger.debug("Not removing images {} because they might be in use by another test run", imageNames)
                 // if binding the port fails, a registry from another test run might be running => not a leftover
                 false
             }
@@ -78,8 +84,10 @@ object OciImages {
                 for (imageName in imageNames) {
                     try {
                         dockerClient.removeImageCmd(imageName).exec()
+                        logger.debug("Removed leftover image {}", imageName)
                     } catch (ignored: NotFoundException) {
                     } catch (e: Exception) {
+                        logger.debug("Removing leftover image {} failed", imageName, e)
                         // only fail if not possible to delete an image that can interfere with the current test run
                         if (port == currentRegistryPort) {
                             throw e
@@ -110,13 +118,17 @@ object OciImages {
             if (retain) {
                 try {
                     dockerClient.tagImageCmd(imageName.toString(), imageName.repository, imageName.versionPart).exec()
+                    logger.debug("Retained image {}:{}", imageName.repository, imageName.versionPart)
                 } catch (ignored: NotFoundException) {
+                    logger.debug("Retaining image {}:{} failed", imageName.repository, imageName.versionPart, ignored)
                 }
             }
             try {
                 dockerClient.removeImageCmd(imageName.toString()).exec()
+                logger.debug("Removed image {}", imageName)
             } catch (ignored: NotFoundException) {
             } catch (e: Exception) {
+                logger.debug("Removing image {} failed", imageName, e)
                 if (error == null) {
                     error = e
                 } else {
@@ -131,7 +143,11 @@ object OciImages {
     }
 
     private fun stopRegistry() {
-        registry?.disposeNow()
-        registry = null
+        registry?.run {
+            logger.debug("Stopping OCI registry on port {}", port())
+            disposeNow()
+            logger.debug("Stopped OCI registry")
+            registry = null
+        }
     }
 }
