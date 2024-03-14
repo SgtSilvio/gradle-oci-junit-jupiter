@@ -17,7 +17,7 @@ repositories {
 }
 
 dependencies {
-    testImplementation("io.github.sgtsilvio:gradle-oci-junit-jupiter:0.3.0")
+    testImplementation("io.github.sgtsilvio:gradle-oci-junit-jupiter:0.4.0")
 }
 ```
 
