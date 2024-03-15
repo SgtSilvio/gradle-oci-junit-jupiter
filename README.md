@@ -59,8 +59,10 @@ class ContainerTest {
     @Test
     void testOnce() {
         final GenericContainer<?> container = new GenericContainer(OciImages.getImageName("example/example:123"));
-        container.start();
-        ...
+        try (container) {
+            container.start();
+            ...
+        }
     }
 }
 ```
