@@ -9,10 +9,10 @@ plugins {
 }
 
 group = "io.github.sgtsilvio"
-description = "Integration of gradle-oci and junit-jupiter"
 
 metadata {
     readableName = "Integration of gradle-oci and junit-jupiter"
+    description = "Integration of gradle-oci and junit-jupiter"
     license {
         apache2()
     }
