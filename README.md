@@ -7,32 +7,37 @@
 
 ## How to Use
 
-### Add the Dependency
-
-Add the following to your `build.gradle(.kts)`:
+Use the Gradle OCI Plugin and add the dependency on `gradle-oci-junit-jupiter` in your `build.gradle(.kts)`:
 
 ```kotlin
+plugins {
+    java
+    id("io.github.sgtsilvio.gradle.oci") version "0.9.0"
+}
+
 repositories {
     mavenCentral()
 }
 
-dependencies {
-    testImplementation("io.github.sgtsilvio:gradle-oci-junit-jupiter:0.4.0")
-}
-```
-
-### Use gradle-oci
-
-Example configuration in `build.gradle(.kts)`:
-
-```kotlin
-plugins {
-    id("io.github.sgtsilvio.gradle.oci")
-}
-
 oci {
-    imageDependencies.forTest(tasks.test) {
-        add("example:example:123")
+    registries {
+        dockerHub {
+            optionalCredentials()
+        }
+    }
+}
+
+testing {
+    suites {
+        "test"(JvmTestSuite::class) {
+            useJUnitJupiter()
+            dependencies {
+                implementation("io.github.sgtsilvio:gradle-oci-junit-jupiter:0.4.0")
+            }
+            ociImageDependencies {
+                runtime("your:image:123")
+            }
+        }
     }
 }
 ```
@@ -57,11 +62,10 @@ Example in Java:
 ```java
 class ContainerTest {
     @Test
-    void testOnce() {
-        final GenericContainer<?> container = new GenericContainer(OciImages.getImageName("example/example:123"));
-        try (container) {
+    void start() {
+        try (final GenericContainer<?> container = new GenericContainer<>(OciImages.getImageName("your/image:123"))) {
             container.start();
-            ...
+            //...
         }
     }
 }
