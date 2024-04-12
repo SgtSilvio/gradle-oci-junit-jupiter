@@ -1,7 +1,7 @@
 [versions]
 junit-platform = "1.10.2"
 oci-registry = "0.4.0"
-slf4j = "2.0.12"
+slf4j = "2.0.13"
 testcontainers = "1.19.7"
 
 [libraries]
