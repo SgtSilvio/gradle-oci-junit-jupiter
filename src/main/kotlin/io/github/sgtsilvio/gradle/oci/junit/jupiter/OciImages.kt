@@ -55,7 +55,7 @@ object OciImages {
         logger.debug("Checking for leftover images")
         val hostPrefix = getRegistryHost() + ":"
         val dockerClient = DockerClientFactory.instance().client()
-        dockerClient.listImagesCmd().exec().flatMap { it.repoTags.toList() }.mapNotNull { imageName ->
+        dockerClient.listImagesCmd().exec().flatMap { it.repoTags?.toList() ?: emptyList() }.mapNotNull { imageName ->
             if (!imageName.startsWith(hostPrefix)) {
                 return@mapNotNull null
             }
