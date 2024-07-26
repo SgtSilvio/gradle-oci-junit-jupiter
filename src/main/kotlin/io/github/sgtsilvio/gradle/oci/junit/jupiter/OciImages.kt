@@ -17,7 +17,7 @@ import java.nio.file.Paths
  */
 object OciImages {
     private var registry: DisposableServer? = null
-    private val imageNames = mutableListOf<Pair<DockerImageName, Boolean>>()
+    private val imageNames = LinkedHashSet<Pair<DockerImageName, Boolean>>()
     private val logger = LoggerFactory.getLogger(OciImages::class.java)
 
     @JvmStatic
