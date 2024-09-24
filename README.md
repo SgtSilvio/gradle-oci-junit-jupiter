@@ -12,7 +12,7 @@ Use the Gradle OCI Plugin and add the dependency on `gradle-oci-junit-jupiter` i
 ```kotlin
 plugins {
     java
-    id("io.github.sgtsilvio.gradle.oci") version "0.12.0"
+    id("io.github.sgtsilvio.gradle.oci") version "0.16.0"
 }
 
 repositories {
@@ -34,8 +34,10 @@ testing {
             dependencies {
                 implementation("io.github.sgtsilvio:gradle-oci-junit-jupiter:0.6.0")
             }
-            ociImageDependencies {
-                runtime("your:image:123")
+            oci.of(this) {
+                imageDependencies {
+                    runtime("your:image:123")
+                }
             }
         }
     }
