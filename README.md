@@ -57,6 +57,9 @@ Usually, `host.docker.internal` resolves to the address `192.168.65.254`.
 }
 ```
 
+Your Docker subnet may be configured differently.
+You can determine the IP address by resolving the domain name `host.docker.internal` inside a container using this command: `docker run --rm busybox nslookup host.docker.internal`.
+
 ### Start a TestContainer in Your JUnit Test
 
 Example in Java:
