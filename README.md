@@ -12,7 +12,7 @@ Use the Gradle OCI Plugin and add the dependency on `gradle-oci-junit-jupiter` i
 ```kotlin
 plugins {
     java
-    id("io.github.sgtsilvio.gradle.oci") version "0.20.2"
+    id("io.github.sgtsilvio.gradle.oci") version "0.22.0"
 }
 
 repositories {
