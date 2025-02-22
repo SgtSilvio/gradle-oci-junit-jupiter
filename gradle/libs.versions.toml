@@ -2,7 +2,7 @@
 junit-platform = "1.11.4"
 oci-registry = "0.5.0"
 slf4j = "2.0.16"
-testcontainers = "1.20.4"
+testcontainers = "1.20.5"
 
 [libraries]
 junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher", version.ref = "junit-platform" }
