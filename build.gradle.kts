@@ -3,9 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.defaults)
     alias(libs.plugins.metadata)
-    `maven-publish`
-    signing
-    alias(libs.plugins.nexusPublish)
+    alias(libs.plugins.mavenCentralPublishing)
 }
 
 group = "io.github.sgtsilvio"
@@ -48,7 +46,7 @@ dependencies {
 
 publishing {
     publications {
-        register<MavenPublication>("maven") {
+        register<MavenPublication>("main") {
             from(components["java"])
         }
     }
@@ -58,14 +56,5 @@ signing {
     val signingKey: String? by project
     val signingPassword: String? by project
     useInMemoryPgpKeys(signingKey, signingPassword)
-    sign(publishing.publications["maven"])
-}
-
-nexusPublishing {
-    repositories {
-        sonatype {
-            nexusUrl = uri("https://s01.oss.sonatype.org/service/local/")
-            snapshotRepositoryUrl = uri("https://s01.oss.sonatype.org/content/repositories/snapshots/")
-        }
-    }
+    sign(publishing.publications["main"])
 }
