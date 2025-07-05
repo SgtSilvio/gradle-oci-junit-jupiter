@@ -1,5 +1,5 @@
 [versions]
-junit-platform = "1.13.2"
+junit-platform = "1.13.3"
 oci-registry = "0.6.0"
 slf4j = "2.0.17"
 testcontainers = "1.21.2"
