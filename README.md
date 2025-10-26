@@ -32,7 +32,7 @@ testing {
         "test"(JvmTestSuite::class) {
             useJUnitJupiter()
             dependencies {
-                implementation("io.github.sgtsilvio:gradle-oci-junit-jupiter:0.7.0")
+                implementation("io.github.sgtsilvio:gradle-oci-junit-jupiter:0.8.0")
             }
             oci.of(this) {
                 imageDependencies {
