@@ -66,7 +66,7 @@ object OciImages {
             }
             val port = try {
                 imageName.substring(portStartIndex, portEndIndex).toInt()
-            } catch (e: NumberFormatException) {
+            } catch (_: NumberFormatException) {
                 return@mapNotNull null
             }
             Pair(port, imageName)
@@ -75,7 +75,7 @@ object OciImages {
                 ServerSocket(port).close()
                 // if binding the port succeeds, no registry is running on that port => leftover
                 true
-            } catch (ignored: Exception) {
+            } catch (_: Exception) {
                 logger.debug("Not removing images {} because they might be in use by another test run", imageNames)
                 // if binding the port fails, a registry from another test run might be running => not a leftover
                 false
@@ -85,7 +85,7 @@ object OciImages {
                     try {
                         dockerClient.removeImageCmd(imageName).exec()
                         logger.debug("Removed leftover image {}", imageName)
-                    } catch (ignored: NotFoundException) {
+                    } catch (_: NotFoundException) {
                     } catch (e: Exception) {
                         logger.debug("Removing leftover image {} failed", imageName, e)
                         // only fail if not possible to delete an image that can interfere with the current test run
@@ -126,7 +126,7 @@ object OciImages {
             try {
                 dockerClient.removeImageCmd(imageName.toString()).exec()
                 logger.debug("Removed image {}", imageName)
-            } catch (ignored: NotFoundException) {
+            } catch (_: NotFoundException) {
             } catch (e: Exception) {
                 logger.debug("Removing image {} failed", imageName, e)
                 if (error == null) {
