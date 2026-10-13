@@ -47,18 +47,19 @@ testing {
 ### Configure Docker on MacOS / Windows
 
 On MacOS and Windows `host.docker.internal` needs to be configured as an insecure registry in the Docker daemon configuration.
-Usually, `host.docker.internal` resolves to the address `192.168.65.254`.
+Usually, `host.docker.internal` resolves to the IPv4 address `192.168.65.254` or the IPv6 address `fdc4:f303:9324::254`.
 
 ```json
 {
   "insecure-registries": [
-    "192.168.65.254/32"
+    "192.168.65.254/32",
+    "fdc4:f303:9324::254/128"
   ]
 }
 ```
 
 Your Docker subnet may be configured differently.
-You can determine the IP address by resolving the domain name `host.docker.internal` inside a container using this command:
+You can determine the IPv4/6 addresses by resolving the domain name `host.docker.internal` inside a container using this command:
 
 ```shell
 docker run --rm busybox nslookup host.docker.internal
